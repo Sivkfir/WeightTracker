@@ -1,19 +1,20 @@
-// ייבוא הפונקציות של Firebase
+// Import the necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
 
-// הגדרות Firebase
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCjSaUWJCXT1hLRE5RHOFP8oTkelApcF5E",
+  authDomain: "weighttracker-2880a.firebaseapp.com",
+  databaseURL: "https://weighttracker-2880a-default-rtdb.firebaseio.com",
+  projectId: "weighttracker-2880a",
+  storageBucket: "weighttracker-2880a.firebasestorage.app",
+  messagingSenderId: "343830489675",
+  appId: "1:343830489675:web:b2faec8e1bc4398512fbce",
+  measurementId: "G-9WK1SP7CQZ"
 };
 
-// אתחול Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
