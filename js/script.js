@@ -1,4 +1,3 @@
-
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCjSaUWJCXT1hLRE5RHOFP8oTkelApcF5E",
@@ -55,6 +54,11 @@ function resetProgress() {
   db.ref('progress').remove();
   alert('האיפוס הושלם!');
 }
+
+// Expose functions to global scope
+window.updateProgress = updateProgress;
+window.fetchAndDisplayData = fetchAndDisplayData;
+window.resetProgress = resetProgress;
 
 // Initialize data fetching
 fetchAndDisplayData();
