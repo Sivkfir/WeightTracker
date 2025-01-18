@@ -12,6 +12,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// Initialize Realtime Database
 const db = firebase.database();
 
 // Update data to Firebase
