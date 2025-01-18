@@ -1,6 +1,3 @@
-// Import the necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -8,17 +5,17 @@ const firebaseConfig = {
   authDomain: "weighttracker-2880a.firebaseapp.com",
   databaseURL: "https://weighttracker-2880a-default-rtdb.firebaseio.com",
   projectId: "weighttracker-2880a",
-  storageBucket: "weighttracker-2880a.firebasestorage.app",
+  storageBucket: "weighttracker-2880a.appspot.com",
   messagingSenderId: "343830489675",
   appId: "1:343830489675:web:b2faec8e1bc4398512fbce",
   measurementId: "G-9WK1SP7CQZ"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-// פונקציה לעדכון נתונים
+// Update data to Firebase
 function updateProgress() {
   const nameInput = document.getElementById('name').value.trim();
   const weightLossInput = document.getElementById('weightLoss').value;
@@ -32,16 +29,17 @@ function updateProgress() {
   const data = {
     name: nameInput,
     week: parseInt(weekInput, 10),
-    weightLoss: parseFloat(weightLossInput),
+    weightLoss: parseFloat(weightLossInput)
   };
 
-  push(ref(db, 'progress'), data);
+  // Push data to Firebase
+  db.ref('progress').push(data);
 }
 
-// פונקציה להצגת נתונים
+// Fetch and display data
 function fetchAndDisplayData() {
   const historyList = document.getElementById('historyList');
-  onValue(ref(db, 'progress'), (snapshot) => {
+  db.ref('progress').on('value', (snapshot) => {
     historyList.innerHTML = '';
     snapshot.forEach((child) => {
       const data = child.val();
@@ -52,16 +50,11 @@ function fetchAndDisplayData() {
   });
 }
 
-// פונקציה לאיפוס נתונים
+// Reset data in Firebase
 function resetProgress() {
-  remove(ref(db, 'progress'));
+  db.ref('progress').remove();
   alert('האיפוס הושלם!');
 }
 
-// הפיכת הפונקציות לזמינות ל-HTML
-window.updateProgress = updateProgress;
-window.fetchAndDisplayData = fetchAndDisplayData;
-window.resetProgress = resetProgress;
-
-// אתחול תצוגת הנתונים
+// Initialize data fetching
 fetchAndDisplayData();
