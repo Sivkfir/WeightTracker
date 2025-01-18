@@ -14,10 +14,21 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Initialize Realtime Database
-const db = firebase.database();
+let db;
+document.addEventListener("DOMContentLoaded", () => {
+  db = firebase.database();
 
-// Update data to Firebase
+  // Fetch and display data on load
+  fetchAndDisplayData();
+});
+
+// Function to update progress
 function updateProgress() {
+  if (!db) {
+    alert('Database is not initialized yet.');
+    return;
+  }
+
   const nameInput = document.getElementById('name').value.trim();
   const weightLossInput = document.getElementById('weightLoss').value;
   const weekInput = document.getElementById('week').value;
@@ -30,15 +41,20 @@ function updateProgress() {
   const data = {
     name: nameInput,
     week: parseInt(weekInput, 10),
-    weightLoss: parseFloat(weightLossInput)
+    weightLoss: parseFloat(weightLossInput),
   };
 
   // Push data to Firebase
   db.ref('progress').push(data);
 }
 
-// Fetch and display data
+// Function to fetch and display data
 function fetchAndDisplayData() {
+  if (!db) {
+    alert('Database is not initialized yet.');
+    return;
+  }
+
   const historyList = document.getElementById('historyList');
   db.ref('progress').on('value', (snapshot) => {
     historyList.innerHTML = '';
@@ -51,8 +67,13 @@ function fetchAndDisplayData() {
   });
 }
 
-// Reset data in Firebase
+// Function to reset progress
 function resetProgress() {
+  if (!db) {
+    alert('Database is not initialized yet.');
+    return;
+  }
+
   db.ref('progress').remove();
   alert('האיפוס הושלם!');
 }
@@ -61,6 +82,3 @@ function resetProgress() {
 window.updateProgress = updateProgress;
 window.fetchAndDisplayData = fetchAndDisplayData;
 window.resetProgress = resetProgress;
-
-// Initialize data fetching
-fetchAndDisplayData();
